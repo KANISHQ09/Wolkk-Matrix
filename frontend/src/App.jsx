@@ -214,6 +214,94 @@ const LandingPage = ({ onStart, onNav, onDemo }) => (
       </div>
     </section>
 
+    {/* Founders & Team Section */}
+    <section id="team" className="py-32 px-6 md:px-10 border-t border-white/5 bg-[#05070a]">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-[1.5fr_1fr] gap-20">
+          {/* Left: Founders */}
+          <div>
+            <h2 className="text-4xl font-black tracking-tighter uppercase italic mb-12">About Team Matrix</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-12">
+              {[
+                { n: "Kanishq Singh Negi", t: "Founder & CEO", icon: User },
+                { n: "Madhavan Singh Parihar", t: "Head of Product & Design", icon: Sparkles },
+                { n: "Muiz Khan", t: "Head of Growth & Strategy", icon: Zap },
+                { n: "Milind Thorat", t: "AI & Data Lead", icon: Bot }
+              ].map(f => (
+                <div key={f.n} className="glass-card rounded-2xl p-4 border-white/5 group hover:bg-white/5 transition-all">
+                  <div className="aspect-square rounded-xl overflow-hidden mb-4 bg-white/5 flex items-center justify-center text-white/10 group-hover:text-indigo-500/30 transition-colors">
+                    <f.icon size={32} />
+                  </div>
+                  <div className="text-[10px] font-black uppercase tracking-widest text-white mb-1 line-clamp-2 min-h-[30px]">{f.n}</div>
+                  <div className="text-[9px] font-bold uppercase tracking-widest text-white/30">{f.t}</div>
+                </div>
+              ))}
+            </div>
+            <div className="space-y-8 text-brand-gray text-sm font-medium leading-relaxed max-w-2xl">
+              <div className="space-y-4">
+                <p>Team Matrix is a product-driven technology team focused on building intelligent, scalable, and user-centric digital solutions.</p>
+                <p>Founded by a group of builders with strong expertise in full stack development, AI systems, product design, and growth strategy, Team Matrix operates at the intersection of innovation and real-world impact.</p>
+              </div>
+              
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/5">
+                <p className="text-white font-black uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
+                  <Sparkles size={14} className="text-indigo-400" />
+                  The Philosophy
+                </p>
+                <p className="italic text-lg font-black tracking-tight text-indigo-400">"Build fast, solve real problems, and ship products that matter."</p>
+              </div>
+
+              <div className="space-y-4 pt-4 border-t border-white/5">
+                <h3 className="text-white font-black uppercase tracking-widest text-xs">🚀 Wolkk — Our First Product (2026)</h3>
+                <p>Wolkk is the flagship product by Team Matrix, built to solve real-world challenges using AI and intelligent automation.</p>
+                <p>Designed as a smart, scalable platform, Wolkk helps users navigate complex systems with ease, delivering faster, smarter, and more efficient outcomes.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Team Stats */}
+          <div className="lg:pt-24">
+            <h2 className="text-4xl font-black tracking-tighter uppercase italic mb-12 lg:hidden">Team</h2>
+            <div className="space-y-12 mb-16">
+              {[
+                { icon: Database, t: "Expertise in full stack development, AI systems, and product design" },
+                { icon: Sparkles, t: "Built with modern tech: React, Node.js, Python, and Cloud platforms" },
+                { icon: ShieldCheck, t: "Focus on speed, usability, and scalability in every product" }
+              ].map((item, i) => (
+                <div key={i} className="flex gap-6 items-start">
+                  <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-indigo-400 shrink-0">
+                    <item.icon size={20} />
+                  </div>
+                  <p className="text-sm font-bold text-white/60 leading-relaxed pt-1">{item.t}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-2 gap-6">
+              <div className="glass-card rounded-3xl p-8 border-white/5 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <Database size={40} />
+                </div>
+                <div className="text-4xl font-black tracking-tighter mb-4 italic">10%</div>
+                <div className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 leading-loose">
+                  of Fortune 2000<br />uses Wolkk
+                </div>
+              </div>
+              <div className="glass-card rounded-3xl p-8 border-white/5 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                   <Zap size={40} />
+                </div>
+                <div className="text-4xl font-black tracking-tighter mb-4 italic">12k</div>
+                <div className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 leading-loose">
+                  GitHub Stars<br />& Community
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     {/* CTA Section */}
     <section className="py-24 md:py-40 px-6 md:px-10 text-center relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-600/5 to-transparent"></div>
