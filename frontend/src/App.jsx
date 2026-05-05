@@ -20,7 +20,9 @@ import {
   Clock,
   Sparkles,
   Search,
-  ShieldCheck
+  ShieldCheck,
+  Menu,
+  X
 } from 'lucide-react';
 
 const Logo = () => (
@@ -41,22 +43,49 @@ const TopBanner = () => (
   </div>
 );
 
-const LandingNav = ({ onStart }) => (
-  <header className="relative z-50">
-    <div className="max-w-7xl mx-auto flex items-center justify-between px-10 py-8">
-      <Logo />
-      <nav className="hidden md:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em] text-white/40">
-        <a className="hover:text-white transition-colors" href="#product">Product</a>
-        <a className="hover:text-white transition-colors" href="#pricing">Pricing</a>
-        <a className="hover:text-white transition-colors" href="#resources">Resources</a>
-      </nav>
-      <div className="flex items-center gap-4">
-        <button onClick={onStart} className="text-[11px] font-black uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors px-6">Log in</button>
-        <button onClick={onStart} className="bg-white text-brand-navy px-8 py-3 rounded-xl font-black text-[11px] uppercase tracking-[0.2em] hover:bg-brand-gray transition-all shadow-[0_10px_20px_rgba(255,255,255,0.1)] active:scale-95">Get Started</button>
+const LandingNav = ({ onStart }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  return (
+    <header className="relative z-50">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-10 py-8">
+        <Logo />
+        <nav className="hidden md:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em] text-white/40">
+          <a className="hover:text-white transition-colors" href="#product">Product</a>
+          <a className="hover:text-white transition-colors" href="#pricing">Pricing</a>
+          <a className="hover:text-white transition-colors" href="#resources">Resources</a>
+        </nav>
+        <div className="hidden md:flex items-center gap-4">
+          <button onClick={onStart} className="text-[11px] font-black uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors px-6">Log in</button>
+          <button onClick={onStart} className="bg-white text-brand-navy px-8 py-3 rounded-xl font-black text-[11px] uppercase tracking-[0.2em] hover:bg-brand-gray transition-all shadow-[0_10px_20px_rgba(255,255,255,0.1)] active:scale-95">Get Started</button>
+        </div>
+        
+        {/* Mobile Toggle */}
+        <button 
+          className="md:hidden text-white p-2"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          {mobileMenuOpen ? <X /> : <Menu />}
+        </button>
       </div>
-    </div>
-  </header>
-);
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-brand-dark border-b border-white/5 p-10 flex flex-col gap-8 animate-fade-in z-50">
+          <nav className="flex flex-col gap-6 text-xs font-black uppercase tracking-widest text-white/40">
+            <a onClick={() => setMobileMenuOpen(false)} href="#product">Product</a>
+            <a onClick={() => setMobileMenuOpen(false)} href="#pricing">Pricing</a>
+            <a onClick={() => setMobileMenuOpen(false)} href="#resources">Resources</a>
+          </nav>
+          <div className="flex flex-col gap-4 pt-6 border-t border-white/5">
+            <button onClick={onStart} className="text-xs font-black uppercase tracking-widest text-white py-4 bg-white/5 rounded-xl">Log in</button>
+            <button onClick={onStart} className="text-xs font-black uppercase tracking-widest text-brand-navy py-4 bg-white rounded-xl">Get Started</button>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+};
 
 const HeroCard = () => {
   const [saved, setSaved] = useState(0);
@@ -133,9 +162,9 @@ const LandingPage = ({ onStart }) => (
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-indigo-600/10 blur-[150px] -z-10 rounded-full"></div>
       <div className="max-w-7xl mx-auto grid lg:grid-cols-[1fr_1.2fr] gap-20 items-center">
         <div>
-          <h1 className="text-8xl font-black leading-[1.05] tracking-tighter uppercase italic py-8 px-20 -mx-20">
+          <h1 className="text-5xl md:text-8xl font-black leading-[1.05] tracking-tighter uppercase italic py-8 px-4 md:px-20 -mx-4 md:-mx-20">
             SHIFT<br />
-            <span className="block bg-gradient-to-r from-white via-indigo-400 to-indigo-600 bg-clip-text text-transparent pr-20 -mr-20">FINOPS</span>
+            <span className="block bg-gradient-to-r from-white via-indigo-400 to-indigo-600 bg-clip-text text-transparent pr-4 md:pr-20 -mr-4 md:-mr-20">FINOPS</span>
             LEFT
           </h1>
           <p className="mt-10 text-lg text-brand-gray font-medium max-w-lg leading-relaxed">
@@ -226,6 +255,7 @@ const App = () => {
   const [showConfig, setShowConfig] = useState(false);
   const [sessionId] = useState(() => `sess-${Math.random().toString(36).substr(2, 9)}`);
   const [activeView, setActiveView] = useState('landing');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const messagesEndRef = useRef(null);
 
   const suggestedQueries = [
@@ -325,9 +355,23 @@ const App = () => {
   }
 
   return (
-    <div className="flex h-screen bg-brand-dark text-white overflow-hidden font-sans selection:bg-indigo-500/30">
+    <div className="flex h-screen bg-brand-dark text-white overflow-hidden font-sans selection:bg-indigo-500/30 flex-col md:flex-row">
+      {/* Mobile Dashboard Header */}
+      <div className="md:hidden flex items-center justify-between px-6 py-4 border-b border-white/5 bg-[#080b14] z-50">
+        <Logo />
+        <button 
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="p-2 text-brand-gray hover:text-white transition-colors"
+        >
+          {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
       {/* Sidebar - Pro Design */}
-      <aside className="w-72 border-r border-white/5 flex flex-col bg-[#080b14] relative z-20">
+      <aside className={`
+        fixed md:relative inset-y-0 left-0 w-72 border-r border-white/5 flex flex-col bg-[#080b14] z-[60] transition-transform duration-300 transform
+        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      `}>
         <div className="p-8 pb-10 flex items-center gap-3">
           <div className="w-9 h-9 bg-white rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.15)] rotate-3">
             <div className="w-5 h-5 bg-brand-navy rotate-45 rounded-sm"></div>
@@ -342,7 +386,7 @@ const App = () => {
           <div className="text-[10px] uppercase font-black tracking-widest text-white/20 mb-4 ml-4">Workspace</div>
           <button 
             id="nav-ai-assistant"
-            onClick={() => setActiveView('dashboard')}
+            onClick={() => { setActiveView('dashboard'); setIsSidebarOpen(false); }}
             className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl font-bold text-sm transition-all border group brand-shadow ${activeView === 'dashboard' ? 'bg-indigo-600/10 text-indigo-400 border-indigo-600/20' : 'text-brand-gray hover:text-white hover:bg-white/5 border-transparent'}`}
           >
             <div className="flex items-center gap-3">
@@ -354,7 +398,7 @@ const App = () => {
           
           <button 
             id="nav-cost-analytics"
-            onClick={() => setActiveView('analytics')}
+            onClick={() => { setActiveView('analytics'); setIsSidebarOpen(false); }}
             className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl font-bold text-sm transition-all border group brand-shadow ${activeView === 'analytics' ? 'bg-indigo-600/10 text-indigo-400 border-indigo-600/20' : 'text-brand-gray hover:text-white hover:bg-white/5 border-transparent'}`}
           >
             <div className="flex items-center gap-3">
@@ -366,7 +410,7 @@ const App = () => {
 
           <button 
             id="nav-anomalies"
-            onClick={() => setActiveView('anomalies')}
+            onClick={() => { setActiveView('anomalies'); setIsSidebarOpen(false); }}
             className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl font-bold text-sm transition-all border group brand-shadow ${activeView === 'anomalies' ? 'bg-indigo-600/10 text-orange-400 border-indigo-600/20' : 'text-brand-gray hover:text-white hover:bg-white/5 border-transparent'}`}
           >
             <div className="flex items-center gap-3">
@@ -380,7 +424,7 @@ const App = () => {
              <div className="text-[10px] uppercase font-black tracking-widest text-white/20 mb-4 ml-4">Settings</div>
              <button 
                 id="nav-config"
-                onClick={() => setShowConfig(!showConfig)}
+                onClick={() => { setShowConfig(!showConfig); setIsSidebarOpen(false); }}
                 className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl font-medium text-sm transition-all ${showConfig ? 'text-white bg-white/5 border border-white/10' : 'text-brand-gray hover:text-white hover:bg-white/5'}`}
               >
                 <Settings size={18} className={showConfig ? "text-indigo-400" : ""} />
@@ -391,7 +435,7 @@ const App = () => {
 
         <div className="p-6 mt-auto border-t border-white/5 bg-brand-dark/50">
           <div 
-            onClick={() => setActiveView('landing')}
+            onClick={() => { setActiveView('landing'); setIsSidebarOpen(false); }}
             className="flex items-center gap-4 p-3 rounded-2xl glass-card border-white/5 cursor-pointer hover:bg-white/5 transition-all group/profile"
           >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-brand-pink flex items-center justify-center text-xs font-black shadow-lg">
@@ -411,14 +455,23 @@ const App = () => {
               onClick={(e) => {
                 e.stopPropagation();
                 setActiveView('landing');
+                setIsSidebarOpen(false);
               }}
             />
           </div>
         </div>
       </aside>
 
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 animate-fade-in"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
+
       {/* Main Content */}
-      <main className="flex-1 flex flex-col relative bg-[#05070a]">
+      <main className="flex-1 flex flex-col relative bg-[#05070a] overflow-hidden">
         {/* Glow Effects */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none -z-10"></div>
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-brand-pink/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
@@ -447,29 +500,29 @@ const App = () => {
 
         {/* Dynamic View Content */}
         {activeView === 'analytics' && (
-          <div className="flex-1 overflow-y-auto px-10 pt-10 pb-10 space-y-10">
-             {/* Stats Cards Section (Moved here) */}
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="flex-1 overflow-y-auto px-6 md:px-10 pt-6 md:pt-10 pb-10 space-y-6 md:space-y-10">
+             {/* Stats Cards Section */}
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 {[
                   { label: 'Projected Spend', value: '$12,450.00', icon: TrendingUp, color: 'text-indigo-400', bg: 'bg-indigo-400/10', trend: '+4.2%' },
                   { label: 'Active Anomalies', value: '0 Detected', icon: AlertTriangle, color: 'text-emerald-400', bg: 'bg-emerald-400/10', trend: 'Healthy' },
                   { label: 'Optimized Savings', value: '$842.15', icon: Zap, color: 'text-brand-pink', bg: 'bg-brand-pink/10', trend: 'Current Month' }
                 ].map((stat, i) => (
-                  <div key={i} className="glass-card glass-card-hover rounded-[2rem] p-8 transition-all group cursor-pointer border-white/5 shadow-2xl">
-                    <div className="flex items-center justify-between mb-6">
-                      <div className={`w-14 h-14 ${stat.bg} rounded-2xl flex items-center justify-center ${stat.color} transition-transform group-hover:scale-110 group-hover:rotate-3`}>
-                        <stat.icon size={28} />
+                  <div key={i} className="glass-card glass-card-hover rounded-[2rem] p-6 md:p-8 transition-all group cursor-pointer border-white/5 shadow-2xl">
+                    <div className="flex items-center justify-between mb-4 md:mb-6">
+                      <div className={`w-12 h-12 md:w-14 md:h-14 ${stat.bg} rounded-2xl flex items-center justify-center ${stat.color} transition-transform group-hover:scale-110 group-hover:rotate-3`}>
+                        <stat.icon size={stat.icon === Zap ? 24 : 28} />
                       </div>
                       <div className="text-[10px] font-black bg-white/5 px-3 py-1.5 rounded-lg text-brand-gray uppercase tracking-tighter border border-white/5">{stat.trend}</div>
                     </div>
                     <p className="text-xs text-brand-gray font-bold uppercase tracking-widest mb-2">{stat.label}</p>
-                    <h4 className="text-3xl font-black tabular-nums tracking-tighter">{stat.value}</h4>
+                    <h4 className="text-2xl md:text-3xl font-black tabular-nums tracking-tighter">{stat.value}</h4>
                   </div>
                 ))}
              </div>
 
              {/* Additional Analytics Content */}
-             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                 <div className="glass-card rounded-[2.5rem] p-10 border-white/5 relative overflow-hidden group">
                    <div className="absolute top-0 right-0 p-8">
                       <PieChart size={24} className="text-indigo-500 opacity-20 group-hover:opacity-100 transition-opacity" />
@@ -556,14 +609,14 @@ const App = () => {
             {/* Chat Feed */}
             <div className="flex-1 overflow-y-auto px-10 space-y-10 py-10 scroll-smooth">
           {messages.map((msg, i) => (
-            <div key={i} className={`flex gap-6 animate-fade-in ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div key={i} className={`flex gap-3 md:gap-6 animate-fade-in ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               {msg.role === 'bot' && (
-                <div className="w-12 h-12 rounded-2xl glass-card flex items-center justify-center text-indigo-400 shrink-0 shadow-2xl relative">
+                <div className="hidden md:flex w-12 h-12 rounded-2xl glass-card items-center justify-center text-indigo-400 shrink-0 shadow-2xl relative">
                   <div className="absolute inset-0 bg-indigo-500/20 blur-xl rounded-full opacity-50"></div>
                   <Bot size={24} className="relative z-10" />
                 </div>
               )}
-              <div className={`max-w-3xl px-8 py-6 rounded-[2.5rem] shadow-2xl border ${
+              <div className={`max-w-[90%] md:max-w-3xl px-6 md:px-8 py-5 md:py-6 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl border ${
                 msg.role === 'user' 
                   ? 'bg-indigo-600 text-white rounded-tr-none border-indigo-500/50 relative overflow-hidden' 
                   : 'glass-card text-brand-gray rounded-tl-none border-white/10 leading-relaxed font-medium'
@@ -622,11 +675,11 @@ const App = () => {
         </div>
 
         {/* Input Dock */}
-        <div className="px-10 pb-10 pt-4">
+        <div className="px-6 md:px-10 pb-6 md:pb-10 pt-4">
           <form onSubmit={handleSend} className="max-w-5xl mx-auto relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-indigo-600 via-brand-pink to-brand-blue rounded-[2.5rem] blur opacity-20 group-focus-within:opacity-40 transition-opacity duration-500" />
-            <div className="relative glass-card rounded-[2.2rem] p-2 flex items-center border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)]">
-              <div className="flex items-center gap-4 pl-6 text-brand-gray">
+            <div className="relative glass-card rounded-[1.5rem] md:rounded-[2.2rem] p-2 flex items-center border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)]">
+              <div className="hidden md:flex items-center gap-4 pl-6 text-brand-gray">
                 <Sparkles size={22} className="text-indigo-400" />
                 <div className="h-6 w-px bg-white/10"></div>
               </div>
@@ -635,20 +688,20 @@ const App = () => {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about project costs, service breakdowns, or budget trends..."
-                className="flex-1 bg-transparent border-none px-6 py-6 text-[15px] focus:outline-none focus:ring-0 placeholder:text-brand-gray/40 font-medium"
+                placeholder="Ask about project costs..."
+                className="flex-1 bg-transparent border-none px-4 md:px-6 py-4 md:py-6 text-sm md:text-[15px] focus:outline-none focus:ring-0 placeholder:text-brand-gray/40 font-medium"
               />
               <button 
                 id="chat-send"
                 type="submit" 
                 disabled={loading || !input.trim()}
-                className="w-16 h-16 bg-white text-brand-navy rounded-[1.8rem] flex items-center justify-center hover:bg-brand-gray transition-all disabled:opacity-50 disabled:cursor-not-allowed group/btn active:scale-90"
+                className="w-12 h-12 md:w-16 md:h-16 bg-white text-brand-navy rounded-xl md:rounded-[1.8rem] flex items-center justify-center hover:bg-brand-gray transition-all disabled:opacity-50 disabled:cursor-not-allowed group/btn active:scale-90"
               >
-                {loading ? <RefreshCw size={24} className="animate-spin" /> : <Send size={24} className="group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />}
+                {loading ? <RefreshCw size={20} className="animate-spin" /> : <Send size={20} className="group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />}
               </button>
             </div>
           </form>
-          <div className="flex justify-center gap-10 mt-8 text-[9px] font-black uppercase tracking-[0.4em] text-white/10">
+          <div className="hidden md:flex justify-center gap-10 mt-8 text-[9px] font-black uppercase tracking-[0.4em] text-white/10">
             <div className="flex items-center gap-2 group cursor-pointer hover:text-white/30 transition-colors">
               <Clock size={12} />
               <span>Real-time Sync</span>
