@@ -43,7 +43,7 @@ const TopBanner = () => (
   </div>
 );
 
-const LandingNav = ({ onStart }) => {
+const LandingNav = ({ onStart, onNav }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   return (
@@ -51,9 +51,9 @@ const LandingNav = ({ onStart }) => {
       <div className="max-w-7xl mx-auto flex items-center justify-between px-10 py-8">
         <Logo />
         <nav className="hidden md:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em] text-white/40">
-          <a className="hover:text-white transition-colors" href="#product">Product</a>
-          <a className="hover:text-white transition-colors" href="#pricing">Pricing</a>
-          <a className="hover:text-white transition-colors" href="#resources">Resources</a>
+          <button onClick={() => onNav('product')} className="hover:text-white transition-colors">Product</button>
+          <button onClick={() => onNav('pricing')} className="hover:text-white transition-colors">Pricing</button>
+          <button onClick={() => onNav('resources')} className="hover:text-white transition-colors">Resources</button>
         </nav>
         <div className="hidden md:flex items-center gap-4">
           <button onClick={onStart} className="text-[11px] font-black uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors px-6">Log in</button>
@@ -73,9 +73,9 @@ const LandingNav = ({ onStart }) => {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-brand-dark border-b border-white/5 p-10 flex flex-col gap-8 animate-fade-in z-50">
           <nav className="flex flex-col gap-6 text-xs font-black uppercase tracking-widest text-white/40">
-            <a onClick={() => setMobileMenuOpen(false)} href="#product">Product</a>
-            <a onClick={() => setMobileMenuOpen(false)} href="#pricing">Pricing</a>
-            <a onClick={() => setMobileMenuOpen(false)} href="#resources">Resources</a>
+            <button onClick={() => { onNav('product'); setMobileMenuOpen(false); }}>Product</button>
+            <button onClick={() => { onNav('pricing'); setMobileMenuOpen(false); }}>Pricing</button>
+            <button onClick={() => { onNav('resources'); setMobileMenuOpen(false); }}>Resources</button>
           </nav>
           <div className="flex flex-col gap-4 pt-6 border-t border-white/5">
             <button onClick={onStart} className="text-xs font-black uppercase tracking-widest text-white py-4 bg-white/5 rounded-xl">Log in</button>
@@ -152,10 +152,10 @@ const HeroCard = () => {
   );
 };
 
-const LandingPage = ({ onStart }) => (
+const LandingPage = ({ onStart, onNav, onDemo }) => (
   <div className="min-h-screen bg-[#05070a] text-white selection:bg-indigo-500/30 overflow-x-hidden">
     <TopBanner />
-    <LandingNav onStart={onStart} />
+    <LandingNav onStart={onStart} onNav={onNav} />
     
     {/* Hero Section */}
     <section className="relative px-10 pt-16 pb-32">
@@ -174,7 +174,7 @@ const LandingPage = ({ onStart }) => (
             <button onClick={onStart} className="bg-white text-brand-navy px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-brand-gray transition-all shadow-[0_20px_40px_rgba(255,255,255,0.1)] active:scale-95">
               Get Started Free
             </button>
-            <button onClick={onStart} className="bg-white/5 border border-white/10 text-white px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all active:scale-95">
+            <button onClick={onDemo} className="bg-white/5 border border-white/10 text-white px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all active:scale-95">
               View Demo
             </button>
           </div>
@@ -196,9 +196,9 @@ const LandingPage = ({ onStart }) => (
     </section>
 
     {/* Stats Section */}
-    <section id="product" className="py-32 px-10">
+    <section id="product" className="py-20 md:py-32 px-6 md:px-10">
       <div className="max-w-6xl mx-auto text-center mb-24">
-        <h2 className="text-5xl font-black tracking-tighter uppercase mb-6">Cloud waste is <span className="text-indigo-500 italic">Everywhere</span></h2>
+        <h2 className="text-3xl md:text-5xl font-black tracking-tighter uppercase mb-6">Cloud waste is <span className="text-indigo-500 italic">Everywhere</span></h2>
         <p className="text-brand-gray text-lg max-w-2xl mx-auto font-medium">30% of cloud resources are wasted. Shift your cost management to where engineering happens.</p>
       </div>
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10">
@@ -206,7 +206,7 @@ const LandingPage = ({ onStart }) => (
           { n: "69%", t: "of enterprises overrun their cloud budget", color: "text-indigo-400" },
           { n: "30%", t: "of cloud resources are wasted annually", color: "text-rose-400" },
         ].map(s => (
-          <div key={s.n} className="glass-card rounded-[3rem] p-16 border-white/5 relative overflow-hidden group">
+          <div key={s.n} className="glass-card rounded-[3rem] p-8 md:p-16 border-white/5 relative overflow-hidden group">
             <div className="text-6xl md:text-8xl font-black tracking-tighter mb-6 group-hover:scale-110 transition-transform duration-500">{s.n}</div>
             <div className="text-brand-gray text-xl font-medium">{s.t}</div>
           </div>
@@ -215,19 +215,18 @@ const LandingPage = ({ onStart }) => (
     </section>
 
     {/* CTA Section */}
-    <section className="py-40 px-10 text-center relative overflow-hidden">
+    <section className="py-24 md:py-40 px-6 md:px-10 text-center relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-600/5 to-transparent"></div>
-      <h2 className="text-7xl font-black tracking-tighter uppercase mb-12 relative z-10 italic">Ready to optimize?</h2>
-      <button onClick={onStart} className="relative z-10 bg-white text-brand-navy px-16 py-6 rounded-[2rem] font-black text-sm uppercase tracking-[0.3em] hover:bg-brand-gray transition-all shadow-[0_30px_60px_rgba(255,255,255,0.1)] active:scale-95">
+      <h2 className="text-4xl md:text-7xl font-black tracking-tighter uppercase mb-12 relative z-10 italic">Ready to optimize?</h2>
+      <button onClick={onStart} className="relative z-10 bg-white text-brand-navy px-10 md:px-16 py-4 md:py-6 rounded-[1.5rem] md:rounded-[2rem] font-black text-xs md:text-sm uppercase tracking-[0.3em] hover:bg-brand-gray transition-all shadow-[0_30px_60px_rgba(255,255,255,0.1)] active:scale-95">
         Deploy Wolkk Now
       </button>
     </section>
 
-    {/* Footer */}
     <footer className="py-20 px-10 border-t border-white/5 bg-brand-dark">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
         <Logo />
-        <div className="flex gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-white/30">
+        <div className="flex flex-wrap justify-center gap-6 md:gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-white/30">
           <a href="#" className="hover:text-white">Privacy</a>
           <a href="#" className="hover:text-white">Terms</a>
           <a href="#" className="hover:text-white">Docs</a>
@@ -236,6 +235,201 @@ const LandingPage = ({ onStart }) => (
         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/10">© 2026 Matrix FinOps Inc.</p>
       </div>
     </footer>
+  </div>
+);
+
+const ProductPage = ({ onBack }) => (
+  <div className="min-h-screen bg-[#05070a] text-white selection:bg-indigo-500/30 overflow-x-hidden">
+    <TopBanner />
+    <header className="max-w-7xl mx-auto flex items-center justify-between px-10 py-8 relative z-50">
+      <div className="cursor-pointer" onClick={onBack}><Logo /></div>
+      <button onClick={onBack} className="text-xs font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">Back to Home</button>
+    </header>
+    
+    <section className="py-32 px-10">
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-7xl font-black tracking-tighter uppercase italic mb-10">Intelligence <span className="text-indigo-500">First</span></h1>
+        <div className="grid md:grid-cols-2 gap-20 items-center">
+          <div>
+            <p className="text-xl text-brand-gray leading-relaxed mb-10 font-medium">Wolkk is the only FinOps platform that sits directly in your CI/CD pipeline, catching cost spikes before they reach production.</p>
+            <div className="space-y-8">
+              {[
+                { title: "Anomaly Detection", desc: "Real-time identification of unusual spending patterns using proprietary ML models.", icon: AlertTriangle },
+                { title: "Forecast Engine", desc: "Predict your end-of-month bill with 98.4% accuracy based on historical trends.", icon: TrendingUp },
+                { title: "BigQuery Integration", desc: "Zero-latency connection to your GCP billing export tables.", icon: Database }
+              ].map(f => (
+                <div key={f.title} className="flex gap-6">
+                  <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-indigo-400 shrink-0">
+                    <f.icon size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-black uppercase tracking-tight mb-2">{f.title}</h3>
+                    <p className="text-sm text-brand-gray font-medium">{f.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="glass-card rounded-[3rem] p-8 md:p-12 border-white/5 relative overflow-hidden group shadow-2xl">
+             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent"></div>
+             
+             {/* Report Header */}
+             <div className="flex items-center gap-3 mb-10">
+               <div className="px-3 py-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-[9px] font-black uppercase tracking-[0.2em] text-indigo-400">
+                 Intelligence Engine
+               </div>
+               <div className="h-1 w-1 rounded-full bg-white/20"></div>
+               <div className="text-[9px] text-white/20 font-mono tracking-widest uppercase italic">Node-ID: BQ-AGNT-01</div>
+             </div>
+
+             {/* Report Content */}
+             <div className="space-y-8 relative z-10">
+                <div>
+                   <p className="text-sm md:text-base font-medium text-white/60 mb-2">Your total spend for last month (May 2026) was:</p>
+                   <h2 className="text-4xl md:text-5xl font-black text-indigo-400 tracking-tighter">$27,614.78 USD</h2>
+                </div>
+
+                <div className="space-y-4">
+                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30">Summary by Top Projects:</p>
+                   <div className="space-y-3">
+                      {[
+                        { n: "data-pipeline-prod", v: "$10,245.33" },
+                        { n: "analytics-warehouse", v: "$8,732.41" },
+                        { n: "ml-platform", v: "$5,274.85" },
+                        { n: "dev-tools", v: "$3,362.19" }
+                      ].map(p => (
+                        <div key={p.n} className="flex justify-between items-center text-sm font-medium">
+                           <div className="flex items-center gap-2">
+                              <div className="w-1 h-1 rounded-full bg-indigo-400/40"></div>
+                              <span className="text-white/60">{p.n}</span>
+                           </div>
+                           <span className="font-bold tabular-nums">{p.v}</span>
+                        </div>
+                      ))}
+                   </div>
+                </div>
+             </div>
+
+             {/* Report Footer */}
+             <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row gap-6 text-[9px] font-black uppercase tracking-[0.2em] text-white/20">
+                <div className="flex items-center gap-2">
+                   <Clock size={12} />
+                   Period: May 1 – May 31, 2026 (UTC)
+                </div>
+                <div className="flex items-center gap-2">
+                   <Database size={12} />
+                   Currency: USD
+                </div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+);
+
+const PricingPage = ({ onBack }) => (
+  <div className="min-h-screen bg-[#05070a] text-white selection:bg-indigo-500/30 overflow-x-hidden">
+    <TopBanner />
+    <header className="max-w-7xl mx-auto flex items-center justify-between px-10 py-8 relative z-50">
+      <div className="cursor-pointer" onClick={onBack}><Logo /></div>
+      <button onClick={onBack} className="text-xs font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">Back to Home</button>
+    </header>
+
+    <section className="py-20 md:py-32 px-6 md:px-10">
+      <div className="max-w-6xl mx-auto text-center mb-24">
+        <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-6">Built for <span className="text-indigo-500">Growth</span></h1>
+        <p className="text-brand-gray text-lg max-w-2xl mx-auto">Scale your FinOps from individual developers to global enterprises.</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-[1400px] mx-auto">
+        {[
+          { 
+            name: "Infracost CI/CD", 
+            price: "Free", 
+            tagline: "Sign up free",
+            features: ["Terraform, CloudFormation, CDK", "GH, GL, Azure DevOps", "1000 free runs/mo", "Slack Community"],
+            btn: "Sign up free"
+          },
+          { 
+            name: "Starter", 
+            price: "$250", 
+            tagline: "Best for more estimates",
+            features: ["Everything in CI/CD", "Email support", "10,000 runs/mo"],
+            btn: "Purchase now"
+          },
+          { 
+            name: "Cloud", 
+            price: "$1,000", 
+            tagline: "Best for FinOps teams",
+            features: ["Everything in Starter", "10 admin & dev seats", "FinOps policies", "Cost Guardrails", "Visibility dashboards"],
+            btn: "Start trial",
+            highlight: true
+          },
+          { 
+            name: "Enterprise", 
+            price: "Contact", 
+            tagline: "Advanced security & compliance",
+            features: ["Everything in Cloud", "GH & GL Enterprise", "Complex security", "SKU price overrides", "SSO & SAML", "Enterprise support"],
+            btn: "Contact us"
+          }
+        ].map(p => (
+          <div key={p.name} className={`glass-card rounded-[2.5rem] p-8 md:p-10 border-white/5 flex flex-col relative group overflow-hidden ${p.highlight ? 'ring-2 ring-indigo-500/50 scale-105 z-10' : ''}`}>
+            {p.highlight && <div className="absolute top-0 inset-x-0 h-2 bg-indigo-500"></div>}
+            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30 mb-2">{p.name}</div>
+            <div className="text-4xl font-black tracking-tighter mb-4">{p.price}{p.price !== 'Free' && p.price !== 'Contact' && <span className="text-xs text-white/20 uppercase tracking-widest ml-1">/mo</span>}</div>
+            <p className="text-[10px] text-indigo-400 font-bold uppercase tracking-widest mb-8 min-h-[20px]">{p.tagline}</p>
+            
+            <div className="space-y-4 mb-10 flex-1">
+              {p.features.map(f => (
+                <div key={f} className="flex gap-3 text-[11px] font-bold text-brand-gray leading-tight">
+                  <div className="w-4 h-4 rounded-full bg-white/5 flex items-center justify-center text-indigo-400 shrink-0">
+                    <CheckCircle2 size={10} />
+                  </div>
+                  {f}
+                </div>
+              ))}
+            </div>
+            
+            <button className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all ${p.highlight ? 'bg-white text-brand-navy shadow-[0_10px_20px_rgba(255,255,255,0.1)]' : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'}`}>
+              {p.btn}
+            </button>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+);
+
+const ResourcesPage = ({ onBack }) => (
+  <div className="min-h-screen bg-[#05070a] text-white selection:bg-indigo-500/30 overflow-x-hidden">
+    <TopBanner />
+    <header className="max-w-7xl mx-auto flex items-center justify-between px-10 py-8 relative z-50">
+      <div className="cursor-pointer" onClick={onBack}><Logo /></div>
+      <button onClick={onBack} className="text-xs font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">Back to Home</button>
+    </header>
+
+    <section className="py-32 px-10">
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-7xl font-black tracking-tighter uppercase italic mb-16 text-center">Hub <span className="text-indigo-500">& Docs</span></h1>
+        <div className="grid md:grid-cols-2 gap-10">
+           {[
+             { t: "Documentation", d: "Detailed integration guides for GCP and Terraform.", icon: Database },
+             { t: "Community Slack", d: "Join 5,000+ FinOps engineers sharing best practices.", icon: Bot },
+             { t: "API Reference", d: "Build custom automation on top of Wolkk's AI engine.", icon: Sparkles },
+             { t: "Success Stories", d: "See how companies like Netflix saved 30% on GCP.", icon: ShieldCheck }
+           ].map(r => (
+             <div key={r.t} className="glass-card rounded-[2.5rem] p-10 border-white/5 hover:bg-white/5 transition-all cursor-pointer group">
+               <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
+                 <r.icon size={24} />
+               </div>
+               <h3 className="text-xl font-black uppercase tracking-tight mb-3">{r.t}</h3>
+               <p className="text-brand-gray font-medium text-sm leading-relaxed">{r.d}</p>
+             </div>
+           ))}
+        </div>
+      </div>
+    </section>
   </div>
 );
 
@@ -249,13 +443,14 @@ const App = () => {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [config, setConfig] = useState({
-    projectId: 'promptwars2-495214',
-    billingTable: 'promptwars2-495214.trial.gcp_billing_export_resource_v1_011EA5_074385_C2B410'
+    projectId: '',
+    billingTable: ''
   });
   const [showConfig, setShowConfig] = useState(false);
   const [sessionId] = useState(() => `sess-${Math.random().toString(36).substr(2, 9)}`);
   const [activeView, setActiveView] = useState('landing');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showDemo, setShowDemo] = useState(false);
   const messagesEndRef = useRef(null);
 
   const suggestedQueries = [
@@ -348,11 +543,44 @@ const App = () => {
   };
 
   if (activeView === 'landing') {
-    return <LandingPage onStart={() => {
-      setActiveView('dashboard');
-      setShowConfig(true);
-    }} />;
+    return (
+      <>
+        <LandingPage 
+          onStart={() => {
+            setActiveView('dashboard');
+            setShowConfig(true);
+          }} 
+          onNav={(v) => setActiveView(v)} 
+          onDemo={() => setShowDemo(true)}
+        />
+        {showDemo && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10">
+            <div 
+              className="absolute inset-0 bg-black/90 backdrop-blur-xl animate-fade-in"
+              onClick={() => setShowDemo(false)}
+            ></div>
+            <div className="relative w-full max-w-5xl aspect-video glass-card rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,1)] animate-scale-in">
+               <button 
+                onClick={() => setShowDemo(false)}
+                className="absolute top-6 right-6 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition-all z-10 border border-white/10"
+               >
+                 <X size={20} />
+               </button>
+               <iframe 
+                src="https://drive.google.com/file/d/1j65346wz_PoUjVk0FrPXH6iLAL2nMVeS/preview" 
+                className="w-full h-full"
+                allow="autoplay"
+               ></iframe>
+            </div>
+          </div>
+        )}
+      </>
+    );
   }
+
+  if (activeView === 'product') return <ProductPage onBack={() => setActiveView('landing')} />;
+  if (activeView === 'pricing') return <PricingPage onBack={() => setActiveView('landing')} />;
+  if (activeView === 'resources') return <ResourcesPage onBack={() => setActiveView('landing')} />;
 
   return (
     <div className="flex h-screen bg-brand-dark text-white overflow-hidden font-sans selection:bg-indigo-500/30 flex-col md:flex-row">
