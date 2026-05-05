@@ -248,7 +248,7 @@ const ProductPage = ({ onBack }) => (
     
     <section className="py-32 px-10">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-7xl font-black tracking-tighter uppercase italic mb-10">Intelligence <span className="text-indigo-500">First</span></h1>
+        <h1 className="text-4xl md:text-7xl font-black tracking-tighter uppercase italic mb-10">Intelligence <span className="text-indigo-500">First</span></h1>
         <div className="grid md:grid-cols-2 gap-20 items-center">
           <div>
             <p className="text-xl text-brand-gray leading-relaxed mb-10 font-medium">Wolkk is the only FinOps platform that sits directly in your CI/CD pipeline, catching cost spikes before they reach production.</p>
@@ -328,78 +328,90 @@ const ProductPage = ({ onBack }) => (
   </div>
 );
 
-const PricingPage = ({ onBack }) => (
-  <div className="min-h-screen bg-[#05070a] text-white selection:bg-indigo-500/30 overflow-x-hidden">
-    <TopBanner />
-    <header className="max-w-7xl mx-auto flex items-center justify-between px-10 py-8 relative z-50">
-      <div className="cursor-pointer" onClick={onBack}><Logo /></div>
-      <button onClick={onBack} className="text-xs font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">Back to Home</button>
-    </header>
+const PricingPage = ({ onBack }) => {
+  const [activeTier, setActiveTier] = useState('Cloud');
+  
+  const tiers = [
+    { 
+      name: "Wolkk CI/CD", 
+      price: "Free", 
+      tagline: "Sign up free",
+      features: ["Terraform, CloudFormation, CDK", "GH, GL, Azure DevOps", "1000 free runs/mo", "Slack Community"],
+      btn: "Sign up free"
+    },
+    { 
+      name: "Starter", 
+      price: "$250", 
+      tagline: "Best for more estimates",
+      features: ["Everything in CI/CD", "Email support", "10,000 runs/mo"],
+      btn: "Purchase now"
+    },
+    { 
+      name: "Cloud", 
+      price: "$1,000", 
+      tagline: "Best for FinOps teams",
+      features: ["Everything in Starter", "10 admin & dev seats", "FinOps policies", "Cost Guardrails", "Visibility dashboards"],
+      btn: "Start trial"
+    },
+    { 
+      name: "Enterprise", 
+      price: "Contact", 
+      tagline: "Advanced security & compliance",
+      features: ["Everything in Cloud", "GH & GL Enterprise", "Complex security", "SKU price overrides", "SSO & SAML", "Enterprise support"],
+      btn: "Contact us"
+    }
+  ];
 
-    <section className="py-20 md:py-32 px-6 md:px-10">
-      <div className="max-w-6xl mx-auto text-center mb-24">
-        <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-6">Built for <span className="text-indigo-500">Growth</span></h1>
-        <p className="text-brand-gray text-lg max-w-2xl mx-auto">Scale your FinOps from individual developers to global enterprises.</p>
-      </div>
+  return (
+    <div className="min-h-screen bg-[#05070a] text-white selection:bg-indigo-500/30 overflow-x-hidden">
+      <TopBanner />
+      <header className="max-w-7xl mx-auto flex items-center justify-between px-10 py-8 relative z-50">
+        <div className="cursor-pointer" onClick={onBack}><Logo /></div>
+        <button onClick={onBack} className="text-xs font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">Back to Home</button>
+      </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-[1400px] mx-auto">
-        {[
-          { 
-            name: "Infracost CI/CD", 
-            price: "Free", 
-            tagline: "Sign up free",
-            features: ["Terraform, CloudFormation, CDK", "GH, GL, Azure DevOps", "1000 free runs/mo", "Slack Community"],
-            btn: "Sign up free"
-          },
-          { 
-            name: "Starter", 
-            price: "$250", 
-            tagline: "Best for more estimates",
-            features: ["Everything in CI/CD", "Email support", "10,000 runs/mo"],
-            btn: "Purchase now"
-          },
-          { 
-            name: "Cloud", 
-            price: "$1,000", 
-            tagline: "Best for FinOps teams",
-            features: ["Everything in Starter", "10 admin & dev seats", "FinOps policies", "Cost Guardrails", "Visibility dashboards"],
-            btn: "Start trial",
-            highlight: true
-          },
-          { 
-            name: "Enterprise", 
-            price: "Contact", 
-            tagline: "Advanced security & compliance",
-            features: ["Everything in Cloud", "GH & GL Enterprise", "Complex security", "SKU price overrides", "SSO & SAML", "Enterprise support"],
-            btn: "Contact us"
-          }
-        ].map(p => (
-          <div key={p.name} className={`glass-card rounded-[2.5rem] p-8 md:p-10 border-white/5 flex flex-col relative group overflow-hidden ${p.highlight ? 'ring-2 ring-indigo-500/50 scale-105 z-10' : ''}`}>
-            {p.highlight && <div className="absolute top-0 inset-x-0 h-2 bg-indigo-500"></div>}
-            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30 mb-2">{p.name}</div>
-            <div className="text-4xl font-black tracking-tighter mb-4">{p.price}{p.price !== 'Free' && p.price !== 'Contact' && <span className="text-xs text-white/20 uppercase tracking-widest ml-1">/mo</span>}</div>
-            <p className="text-[10px] text-indigo-400 font-bold uppercase tracking-widest mb-8 min-h-[20px]">{p.tagline}</p>
-            
-            <div className="space-y-4 mb-10 flex-1">
-              {p.features.map(f => (
-                <div key={f} className="flex gap-3 text-[11px] font-bold text-brand-gray leading-tight">
-                  <div className="w-4 h-4 rounded-full bg-white/5 flex items-center justify-center text-indigo-400 shrink-0">
-                    <CheckCircle2 size={10} />
-                  </div>
-                  {f}
+      <section className="py-20 md:py-32 px-6 md:px-10">
+        <div className="max-w-6xl mx-auto text-center mb-24">
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase italic mb-6">Built for <span className="text-indigo-500">Growth</span></h1>
+          <p className="text-brand-gray text-lg max-w-2xl mx-auto">Scale your FinOps from individual developers to global enterprises.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-[1400px] mx-auto items-start">
+          {tiers.map(p => {
+            const isHighlighted = activeTier === p.name;
+            return (
+              <div 
+                key={p.name} 
+                onClick={() => setActiveTier(p.name)}
+                className={`glass-card rounded-[2.5rem] p-8 md:p-10 border-white/5 flex flex-col relative group overflow-hidden cursor-pointer transition-all duration-500 ${isHighlighted ? 'ring-2 ring-indigo-500/50 scale-105 z-10 shadow-[0_30px_60px_rgba(79,70,229,0.1)]' : 'hover:bg-white/[0.02] opacity-80 hover:opacity-100'}`}
+              >
+                {isHighlighted && <div className="absolute top-0 inset-x-0 h-2 bg-indigo-500 animate-pulse"></div>}
+                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30 mb-2">{p.name}</div>
+                <div className="text-4xl font-black tracking-tighter mb-4">{p.price}{p.price !== 'Free' && p.price !== 'Contact' && <span className="text-xs text-white/20 uppercase tracking-widest ml-1">/mo</span>}</div>
+                <p className="text-[10px] text-indigo-400 font-bold uppercase tracking-widest mb-8 min-h-[20px]">{p.tagline}</p>
+                
+                <div className="space-y-4 mb-10 flex-1">
+                  {p.features.map(f => (
+                    <div key={f} className="flex gap-3 text-[11px] font-bold text-brand-gray leading-tight">
+                      <div className="w-4 h-4 rounded-full bg-white/5 flex items-center justify-center text-indigo-400 shrink-0">
+                        <CheckCircle2 size={10} />
+                      </div>
+                      {f}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            
-            <button className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all ${p.highlight ? 'bg-white text-brand-navy shadow-[0_10px_20px_rgba(255,255,255,0.1)]' : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'}`}>
-              {p.btn}
-            </button>
-          </div>
-        ))}
-      </div>
-    </section>
-  </div>
-);
+                
+                <button className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all ${isHighlighted ? 'bg-white text-brand-navy shadow-[0_10px_20px_rgba(255,255,255,0.1)]' : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'}`}>
+                  {p.btn}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    </div>
+  );
+};
 
 const ResourcesPage = ({ onBack }) => (
   <div className="min-h-screen bg-[#05070a] text-white selection:bg-indigo-500/30 overflow-x-hidden">
@@ -411,7 +423,7 @@ const ResourcesPage = ({ onBack }) => (
 
     <section className="py-32 px-10">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-7xl font-black tracking-tighter uppercase italic mb-16 text-center">Hub <span className="text-indigo-500">& Docs</span></h1>
+        <h1 className="text-4xl md:text-7xl font-black tracking-tighter uppercase italic mb-16 text-center">Hub <span className="text-indigo-500">& Docs</span></h1>
         <div className="grid md:grid-cols-2 gap-10">
            {[
              { t: "Documentation", d: "Detailed integration guides for GCP and Terraform.", icon: Database },
