@@ -226,7 +226,7 @@ const LandingPage = ({ onStart, onNav, onDemo }) => (
                 { n: "Kanishq Singh Negi", t: "Founder & CEO", img: "/team/kanishq.jpg" },
                 { n: "Madhavan Singh Parihar", t: "Head of Product & Design", img: "/team/madhavan.jpg" },
                 { n: "Muiz Khan", t: "Head of Growth & Strategy", img: "/team/muiz.png" },
-                { n: "Milind Thorat", t: "AI & Data Lead", icon: Bot }
+                { n: "Milind Thorat", t: "AI & Data Lead", img: "/team/milind.png" }
               ].map(f => (
                 <div key={f.n} className="glass-card rounded-2xl p-4 border-white/5 group hover:bg-white/5 transition-all">
                   <div className="aspect-square rounded-xl overflow-hidden mb-4 bg-white/5 flex items-center justify-center text-white/10 group-hover:text-indigo-500/30 transition-colors">
