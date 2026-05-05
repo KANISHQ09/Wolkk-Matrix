@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  --brand-navy: #0b0f1a;
+  --brand-dark: #05070a;
+  --brand-pink: #ff007a;
+  --brand-blue: #4f46e5;
+  --brand-gray: #94a3b8;
+  --brand-border: rgba(255, 255, 255, 0.08);
+  --brand-glass: rgba(255, 255, 255, 0.03);
+  --hero-grad: radial-gradient(circle at top left, oklch(0.25 0.12 280 / 0.15), transparent 40%),
+               radial-gradient(circle at bottom right, oklch(0.25 0.12 330 / 0.1), transparent 40%);
+}
+
+body {
+  margin: 0;
+  background-color: var(--brand-navy);
+  color: white;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.glass-card {
+  background: var(--brand-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--brand-border);
+}
+
+.glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-gradient {
+  background: linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-blue) 100%);
+}
+
+.brand-shadow {
+  box-shadow: 0 0 30px rgba(79, 70, 229, 0.15);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--brand-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Custom Chart Animations */
+@keyframes barGrow {
+  from { height: 0; }
+  to { height: var(--final-height); }
+}
+
+.bar-grow {
+  animation: barGrow 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}

@@ -1,0 +1,16 @@
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.env
+.adk/
+temp-landing-page/
+dist/
+build/
+.DS_Store
+*.log
+adk_logs*.txt
+flask_logs.txt
+proxy_logs.txt
+proxy_output.txt
+test_output.txt
