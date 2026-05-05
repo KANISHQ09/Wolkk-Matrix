@@ -20,8 +20,7 @@ import {
   Clock,
   Sparkles,
   Search,
-  ExternalLink,
-  Plus
+  ShieldCheck
 } from 'lucide-react';
 
 const Logo = () => (
@@ -134,10 +133,10 @@ const LandingPage = ({ onStart }) => (
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-indigo-600/10 blur-[150px] -z-10 rounded-full"></div>
       <div className="max-w-7xl mx-auto grid lg:grid-cols-[1fr_1.2fr] gap-20 items-center">
         <div>
-          <h1 className="text-8xl font-black leading-[0.85] tracking-tighter uppercase italic">
-            Shift<br />
-            <span className="gradient-text">FinOps</span><br />
-            Left
+          <h1 className="text-8xl font-black leading-[1.05] tracking-tighter uppercase italic py-8 px-20 -mx-20">
+            SHIFT<br />
+            <span className="block bg-gradient-to-r from-white via-indigo-400 to-indigo-600 bg-clip-text text-transparent pr-20 -mr-20">FINOPS</span>
+            LEFT
           </h1>
           <p className="mt-10 text-lg text-brand-gray font-medium max-w-lg leading-relaxed">
             Infrastructure cost governance for modern engineering teams. Prevent cloud waste and budget overruns before they hit your bill.
@@ -146,7 +145,7 @@ const LandingPage = ({ onStart }) => (
             <button onClick={onStart} className="bg-white text-brand-navy px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-brand-gray transition-all shadow-[0_20px_40px_rgba(255,255,255,0.1)] active:scale-95">
               Get Started Free
             </button>
-            <button className="bg-white/5 border border-white/10 text-white px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all active:scale-95">
+            <button onClick={onStart} className="bg-white/5 border border-white/10 text-white px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all active:scale-95">
               View Demo
             </button>
           </div>
@@ -159,16 +158,16 @@ const LandingPage = ({ onStart }) => (
     <section className="py-16 border-y border-white/5 bg-brand-navy/30 overflow-hidden">
       <div className="flex gap-20 animate-scroll whitespace-nowrap">
         {["GCP", "AWS", "AZURE", "TERRAFORM", "KUBERNETES", "PULUMI", "CI/CD", "FINOPS"].map((l, i) => (
-          <div key={i} className="text-3xl font-black text-white/10 tracking-[0.3em] italic uppercase">{l}</div>
+          <div key={i} className="text-3xl font-black text-white/80 tracking-[0.3em] italic uppercase">{l}</div>
         ))}
         {["GCP", "AWS", "AZURE", "TERRAFORM", "KUBERNETES", "PULUMI", "CI/CD", "FINOPS"].map((l, i) => (
-          <div key={i+"-2"} className="text-3xl font-black text-white/10 tracking-[0.3em] italic uppercase">{l}</div>
+          <div key={i+"-2"} className="text-3xl font-black text-white/80 tracking-[0.3em] italic uppercase">{l}</div>
         ))}
       </div>
     </section>
 
     {/* Stats Section */}
-    <section className="py-32 px-10">
+    <section id="product" className="py-32 px-10">
       <div className="max-w-6xl mx-auto text-center mb-24">
         <h2 className="text-5xl font-black tracking-tighter uppercase mb-6">Cloud waste is <span className="text-indigo-500 italic">Everywhere</span></h2>
         <p className="text-brand-gray text-lg max-w-2xl mx-auto font-medium">30% of cloud resources are wasted. Shift your cost management to where engineering happens.</p>
@@ -311,7 +310,7 @@ const App = () => {
       console.error('Error calling agent:', error);
       setMessages(prev => [...prev, { 
         role: 'bot', 
-        content: "Operational failure. Please ensure the ADK Core is active on port 8004." 
+        content: "Operational failure. Please ensure the ADK Core is active on port 8005." 
       }]);
     } finally {
       setLoading(false);
@@ -319,7 +318,10 @@ const App = () => {
   };
 
   if (activeView === 'landing') {
-    return <LandingPage onStart={() => setActiveView('dashboard')} />;
+    return <LandingPage onStart={() => {
+      setActiveView('dashboard');
+      setShowConfig(true);
+    }} />;
   }
 
   return (
@@ -339,6 +341,7 @@ const App = () => {
         <nav className="flex-1 px-4 space-y-1.5 overflow-y-auto">
           <div className="text-[10px] uppercase font-black tracking-widest text-white/20 mb-4 ml-4">Workspace</div>
           <button 
+            id="nav-ai-assistant"
             onClick={() => setActiveView('dashboard')}
             className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl font-bold text-sm transition-all border group brand-shadow ${activeView === 'dashboard' ? 'bg-indigo-600/10 text-indigo-400 border-indigo-600/20' : 'text-brand-gray hover:text-white hover:bg-white/5 border-transparent'}`}
           >
@@ -350,6 +353,7 @@ const App = () => {
           </button>
           
           <button 
+            id="nav-cost-analytics"
             onClick={() => setActiveView('analytics')}
             className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl font-bold text-sm transition-all border group brand-shadow ${activeView === 'analytics' ? 'bg-indigo-600/10 text-indigo-400 border-indigo-600/20' : 'text-brand-gray hover:text-white hover:bg-white/5 border-transparent'}`}
           >
@@ -361,6 +365,7 @@ const App = () => {
           </button>
 
           <button 
+            id="nav-anomalies"
             onClick={() => setActiveView('anomalies')}
             className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl font-bold text-sm transition-all border group brand-shadow ${activeView === 'anomalies' ? 'bg-indigo-600/10 text-orange-400 border-indigo-600/20' : 'text-brand-gray hover:text-white hover:bg-white/5 border-transparent'}`}
           >
@@ -374,6 +379,7 @@ const App = () => {
           <div className="pt-8 pb-4">
              <div className="text-[10px] uppercase font-black tracking-widest text-white/20 mb-4 ml-4">Settings</div>
              <button 
+                id="nav-config"
                 onClick={() => setShowConfig(!showConfig)}
                 className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl font-medium text-sm transition-all ${showConfig ? 'text-white bg-white/5 border border-white/10' : 'text-brand-gray hover:text-white hover:bg-white/5'}`}
               >
@@ -384,18 +390,29 @@ const App = () => {
         </nav>
 
         <div className="p-6 mt-auto border-t border-white/5 bg-brand-dark/50">
-          <div className="flex items-center gap-4 p-3 rounded-2xl glass-card border-white/5">
+          <div 
+            onClick={() => setActiveView('landing')}
+            className="flex items-center gap-4 p-3 rounded-2xl glass-card border-white/5 cursor-pointer hover:bg-white/5 transition-all group/profile"
+          >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-brand-pink flex items-center justify-center text-xs font-black shadow-lg">
               AS
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold truncate">Asus User</p>
+              <p className="text-sm font-bold truncate">User</p>
               <div className="flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                <p className="text-[9px] text-brand-gray uppercase tracking-widest font-bold">Authenticated</p>
+                <p className="text-[9px] text-brand-gray uppercase tracking-widest font-bold">Authenticate</p>
               </div>
             </div>
-            <LogOut size={16} className="text-brand-gray hover:text-brand-pink cursor-pointer transition-colors" />
+            <LogOut 
+              id="logout-button"
+              size={16} 
+              className="text-brand-gray group-hover/profile:text-brand-pink transition-colors" 
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveView('landing');
+              }}
+            />
           </div>
         </div>
       </aside>
@@ -419,7 +436,10 @@ const App = () => {
           </div>
           
           <div className="flex items-center gap-4">
-             <button className="bg-white text-brand-navy hover:bg-brand-gray px-6 py-2.5 rounded-xl font-black text-xs transition-all shadow-[0_10px_20px_rgba(255,255,255,0.1)] active:scale-95 uppercase tracking-widest">
+             <button 
+                onClick={() => setShowConfig(true)}
+                className="bg-white text-brand-navy hover:bg-brand-gray px-6 py-2.5 rounded-xl font-black text-xs transition-all shadow-[0_10px_20px_rgba(255,255,255,0.1)] active:scale-95 uppercase tracking-widest"
+              >
                 Add Account
              </button>
           </div>
@@ -502,7 +522,7 @@ const App = () => {
                          </div>
                          <div>
                             <h4 className="font-bold text-sm uppercase tracking-wide text-white">Unusual Compute Spend</h4>
-                            <p className="text-xs text-brand-gray mt-1">Project: promptwars2-495214 • Region: us-central1</p>
+                            <p className="text-xs text-brand-gray mt-1">Project: {config.projectId} • Region: us-central1</p>
                          </div>
                       </div>
                       <div className="text-right">
@@ -518,7 +538,7 @@ const App = () => {
                          </div>
                          <div>
                             <h4 className="font-bold text-sm uppercase tracking-wide text-white/60">Cloud SQL Storage Optimized</h4>
-                            <p className="text-xs text-white/40 mt-1">Project: promptwars2-495214 • Resolved automatically</p>
+                            <p className="text-xs text-white/40 mt-1">Project: {config.projectId} • Resolved automatically</p>
                          </div>
                       </div>
                       <div className="text-right">
@@ -611,6 +631,7 @@ const App = () => {
                 <div className="h-6 w-px bg-white/10"></div>
               </div>
               <input 
+                id="chat-input"
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -618,11 +639,12 @@ const App = () => {
                 className="flex-1 bg-transparent border-none px-6 py-6 text-[15px] focus:outline-none focus:ring-0 placeholder:text-brand-gray/40 font-medium"
               />
               <button 
+                id="chat-send"
                 type="submit" 
                 disabled={loading || !input.trim()}
                 className="w-16 h-16 bg-white text-brand-navy rounded-[1.8rem] flex items-center justify-center hover:bg-brand-gray transition-all disabled:opacity-50 disabled:cursor-not-allowed group/btn active:scale-90"
               >
-                {loading ? <RefreshCw size={24} className="animate-spin" /> : <Send size={24} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
+                {loading ? <RefreshCw size={24} className="animate-spin" /> : <Send size={24} className="group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />}
               </button>
             </div>
           </form>
@@ -710,7 +732,10 @@ const App = () => {
               </div>
 
               <button 
-                onClick={() => setShowConfig(false)} 
+                onClick={() => {
+                  console.log('Synchronizing configuration for:', config.projectId);
+                  setShowConfig(false);
+                }} 
                 className="w-full bg-white text-brand-navy hover:bg-brand-gray font-black py-5 rounded-2xl text-xs uppercase tracking-[0.2em] transition-all shadow-2xl active:scale-95"
               >
                 Sync Configuration
@@ -723,23 +748,5 @@ const App = () => {
     </div>
   );
 };
-
-// Simple ShieldCheck component as it's missing in imports but good for design
-const ShieldCheck = ({ size, className }) => (
-  <svg 
-    width={size} 
-    height={size} 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    className={className}
-  >
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-    <path d="m9 12 2 2 4-4" />
-  </svg>
-);
 
 export default App;
