@@ -99,7 +99,7 @@ const HeroCard = () => {
 
       <div className="mt-12 space-y-4">
         {[
-          { msg: "Scale instances", hash: "d83425", change: "$51,035", pct: "+18%", color: "text-rose-400" },
+          { msg: "Scale instances", hash: "d83425", change: "$14,240", pct: "+18%", color: "text-rose-400" },
           { msg: "Redundant disk", hash: "c074e5", change: "$12,417", pct: "-42%", color: "text-emerald-400" },
         ].map((r) => (
           <div key={r.hash} className="flex items-center justify-between p-5 rounded-2xl bg-white/5 border border-white/5 group-hover:border-white/10 transition-all">
