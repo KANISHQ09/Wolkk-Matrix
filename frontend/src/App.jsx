@@ -223,7 +223,7 @@ const LandingPage = ({ onStart, onNav, onDemo }) => (
             <h2 className="text-4xl font-black tracking-tighter uppercase italic mb-12">About Team Matrix</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-12">
               {[
-                { n: "Kanishq Singh Negi", t: "Founder & CEO", icon: User },
+                { n: "Kanishq Singh Negi", t: "Founder & CEO", img: "/team/kanishq.jpg" },
                 { n: "Madhavan Singh Parihar", t: "Head of Product & Design", img: "/team/madhavan.jpg" },
                 { n: "Muiz Khan", t: "Head of Growth & Strategy", icon: Zap },
                 { n: "Milind Thorat", t: "AI & Data Lead", icon: Bot }
@@ -231,7 +231,7 @@ const LandingPage = ({ onStart, onNav, onDemo }) => (
                 <div key={f.n} className="glass-card rounded-2xl p-4 border-white/5 group hover:bg-white/5 transition-all">
                   <div className="aspect-square rounded-xl overflow-hidden mb-4 bg-white/5 flex items-center justify-center text-white/10 group-hover:text-indigo-500/30 transition-colors">
                     {f.img ? (
-                      <img src={f.img} alt={f.n} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                      <img src={f.img} alt={f.n} className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500" />
                     ) : (
                       <f.icon size={32} />
                     )}
