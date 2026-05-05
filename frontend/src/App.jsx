@@ -224,13 +224,17 @@ const LandingPage = ({ onStart, onNav, onDemo }) => (
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-12">
               {[
                 { n: "Kanishq Singh Negi", t: "Founder & CEO", icon: User },
-                { n: "Madhavan Singh Parihar", t: "Head of Product & Design", icon: Sparkles },
+                { n: "Madhavan Singh Parihar", t: "Head of Product & Design", img: "/team/madhavan.jpg" },
                 { n: "Muiz Khan", t: "Head of Growth & Strategy", icon: Zap },
                 { n: "Milind Thorat", t: "AI & Data Lead", icon: Bot }
               ].map(f => (
                 <div key={f.n} className="glass-card rounded-2xl p-4 border-white/5 group hover:bg-white/5 transition-all">
                   <div className="aspect-square rounded-xl overflow-hidden mb-4 bg-white/5 flex items-center justify-center text-white/10 group-hover:text-indigo-500/30 transition-colors">
-                    <f.icon size={32} />
+                    {f.img ? (
+                      <img src={f.img} alt={f.n} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                    ) : (
+                      <f.icon size={32} />
+                    )}
                   </div>
                   <div className="text-[10px] font-black uppercase tracking-widest text-white mb-1 line-clamp-2 min-h-[30px]">{f.n}</div>
                   <div className="text-[9px] font-bold uppercase tracking-widest text-white/30">{f.t}</div>
