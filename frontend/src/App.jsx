@@ -108,11 +108,11 @@ const HeroCard = () => {
         github.com/wolkk-infra/prod
       </div>
 
-      <div className="grid grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
         <div>
           <div className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-3">Cost estimate</div>
           <div className="flex items-baseline gap-2">
-            <span className="text-5xl font-black tracking-tighter">$51,035</span>
+            <span className="text-3xl md:text-5xl font-black tracking-tighter">$51,035</span>
             <span className="text-white/20 text-xs font-bold uppercase">/mo</span>
           </div>
           <div className="text-rose-400 text-[10px] font-black uppercase tracking-widest mt-2">+18% Anomalous</div>
@@ -120,7 +120,7 @@ const HeroCard = () => {
         <div>
           <div className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-3">Cost saved</div>
           <div className="flex items-baseline gap-2">
-            <span className="text-5xl font-black tracking-tighter tabular-nums">${saved.toLocaleString()}</span>
+            <span className="text-3xl md:text-5xl font-black tracking-tighter tabular-nums">${saved.toLocaleString()}</span>
             <span className="text-white/20 text-xs font-bold uppercase">/yr</span>
           </div>
         </div>
@@ -131,7 +131,7 @@ const HeroCard = () => {
           { msg: "Scale instances", hash: "d83425", change: "$14,240", pct: "+18%", color: "text-rose-400" },
           { msg: "Redundant disk", hash: "c074e5", change: "$12,417", pct: "-42%", color: "text-emerald-400" },
         ].map((r) => (
-          <div key={r.hash} className="flex items-center justify-between p-5 rounded-2xl bg-white/5 border border-white/5 group-hover:border-white/10 transition-all">
+          <div key={r.hash} className="flex flex-col md:flex-row items-start md:items-center justify-between p-5 md:p-6 rounded-2xl bg-white/5 border border-white/5 group-hover:border-white/10 transition-all gap-4">
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
                 <Layout size={18} className="text-indigo-400" />
@@ -207,7 +207,7 @@ const LandingPage = ({ onStart }) => (
           { n: "30%", t: "of cloud resources are wasted annually", color: "text-rose-400" },
         ].map(s => (
           <div key={s.n} className="glass-card rounded-[3rem] p-16 border-white/5 relative overflow-hidden group">
-            <div className="text-8xl font-black tracking-tighter mb-6 group-hover:scale-110 transition-transform duration-500">{s.n}</div>
+            <div className="text-6xl md:text-8xl font-black tracking-tighter mb-6 group-hover:scale-110 transition-transform duration-500">{s.n}</div>
             <div className="text-brand-gray text-xl font-medium">{s.t}</div>
           </div>
         ))}
